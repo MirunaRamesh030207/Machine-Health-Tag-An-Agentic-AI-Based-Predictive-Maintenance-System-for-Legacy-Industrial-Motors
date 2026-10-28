@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Machine Health Tag | Live Monitor</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-mark">MH</div>
+      <div class="brand-copy">
+        <strong>Machine Health</strong>
+        <span>TAG / IOT MONITOR</span>
+      </div>
+      <div class="side-label">WORKSPACE</div>
+      <div class="nav-item active"><span class="nav-icon">▦</span> Overview</div>
+      <div class="nav-item"><span class="nav-icon">⌁</span> Live sensors</div>
+      <div class="nav-item"><span class="nav-icon">◉</span> Machine status</div>
+      <div class="side-bottom">
+        <div class="mini-status"><span class="pulse" id="sidePulse"></span><div><b id="sideConnection">Connecting…</b><small id="sidePort">COM9 · 9600 baud</small></div></div>
+        <div class="sidebar-foot">LOW-COST RETROFIT MONITORING</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">MONITORING / OVERVIEW</div>
+          <h1>Machine Health Dashboard</h1>
+          <p class="subhead">Real-time current and vibration monitoring for legacy machinery.</p>
+        </div>
+        <div class="top-right">
+          <div class="connection-pill" id="connectionPill"><span class="pulse"></span><span id="connectionText">Checking connection</span></div>
+          <div class="clock" id="lastUpdated">Waiting for sensor data</div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <div class="hero-kicker"><span class="hero-dot"></span> MACHINE OVERVIEW</div>
+          <h2>Machine Health Tag</h2>
+          <p>External sensor monitoring without modifying the machine's internal controller.</p>
+          <div class="hero-tags"><span>Arduino Uno</span><span>Current sensor</span><span>MPU6050 vibration</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="chip"><span>MH</span><small>LIVE</small></div>
+          <div class="art-line line-one"></div><div class="art-line line-two"></div>
+          <div class="art-node node-one"></div><div class="art-node node-two"></div><div class="art-node node-three"></div>
+        </div>
+      </section>
+
+      <section class="section-heading">
+        <div><h2>Live sensor readings</h2><p>Values refresh automatically while the Arduino is connected.</p></div>
+        <div class="refresh-label"><span class="live-dot"></span> AUTO REFRESH · 2 SEC</div>
+      </section>
+
+      <section class="metrics-grid">
+        <article class="metric-card">
+          <div class="metric-top"><span class="metric-icon current-icon">↯</span><span class="metric-label">MOTOR CURRENT</span><span class="metric-state" id="currentState">—</span></div>
+          <div class="metric-value"><span id="currentValue">--</span><small>ADC</small></div>
+          <div class="metric-foot"><span>Baseline</span><strong id="baselineValue">506.6 ADC</strong></div>
+          <div class="meter"><div id="currentMeter" class="meter-fill"></div></div>
+          <div class="metric-note">Deviation from baseline: <strong id="deviationValue">--%</strong></div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-top"><span class="metric-icon vibration-icon">〰</span><span class="metric-label">VIBRATION</span><span class="metric-state" id="vibrationState">—</span></div>
+          <div class="metric-value"><span id="vibrationValue">--</span><small>g</small></div>
+          <div class="metric-foot"><span>Configured warning level</span><strong>0.007 g</strong></div>
+          <div class="meter"><div id="vibrationMeter" class="meter-fill vibration-fill"></div></div>
+          <div class="metric-note">Prototype threshold indicator</div>
+        </article>
+
+        <article class="metric-card status-card">
+          <div class="metric-top"><span class="metric-icon status-icon">◉</span><span class="metric-label">MACHINE CONDITION</span></div>
+          <div class="status-display"><span class="status-ring" id="statusRing"><span id="statusSymbol">•</span></span><div><div class="status-word" id="machineStatus">WAITING</div><div class="status-caption" id="statusCaption">Waiting for sensor data</div></div></div>
+          <div class="status-divider"></div>
+          <div class="metric-foot"><span>Data source</span><strong id="dataSource">Arduino serial</strong></div>
+        </article>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Health assessment</h3><p>Prototype decision support</p></div><span class="panel-icon">✳</span></div>
+          <div class="assessment-row"><div class="assessment-indicator" id="assessmentIndicator"></div><div><strong id="assessmentTitle">Waiting for readings</strong><p id="assessmentText">Connect the Arduino and start the backend to see the latest assessment.</p></div></div>
+          <div class="recommendation"><span class="recommendation-icon">↗</span><div><strong>Recommended action</strong><p id="recommendationText">No recommendation available yet.</p></div></div>
+          <div class="model-note"><span>ⓘ</span><p id="modelNote">The current prototype uses configured rules. A trained Decision Tree is planned for the final ML stage.</p></div>
+        </article>
+
+        <article class="panel connection-panel">
+          <div class="panel-heading"><div><h3>Device connection</h3><p>Serial link and API status</p></div><span class="panel-icon">⌘</span></div>
+          <div class="device-row"><div class="device-icon">▣</div><div class="device-copy"><strong>Arduino Uno</strong><span>Current + MPU6050 sensors</span></div><span class="device-badge" id="arduinoBadge">OFFLINE</span></div>
+          <div class="device-row"><div class="device-icon api-icon">⌘</div><div class="device-copy"><strong>Node.js API</strong><span>Local monitoring service</span></div><span class="device-badge online" id="apiBadge">ONLINE</span></div>
+          <div class="connection-details">
+            <div><span>Serial port</span><strong id="portValue">COM9</strong></div>
+            <div><span>Baud rate</span><strong id="baudValue">9600</strong></div>
+            <div><span>Last sensor update</span><strong id="sensorTime">—</strong></div>
+          </div>
+          <div class="error-message" id="connectionError">Waiting for the backend response…</div>
+        </article>
+      </section>
+
+      <footer><span>Machine Health Tag · IoT Prototype</span><span>Thresholds are prototype settings, not certified industrial safety limits.</span></footer>
+    </main>
+  </div>
+</body>
+</html>

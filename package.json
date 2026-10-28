@@ -1,0 +1,16 @@
+{
+  "name": "machine-health-tag",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IoT machine health monitoring dashboard for Arduino Uno, current sensor and MPU6050",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "serialport": "^12.0.0",
+    "@serialport/parser-readline": "^12.0.0"
+  }
+}
